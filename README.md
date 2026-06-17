@@ -53,6 +53,6 @@ Alexander Barzykin, Robert Boyce, and Eyal Neuman
   title={FX Market Making with Internal Liquidity},
   author={Barzykin, Alexander and Boyce, Robert and Neuman, Eyal},
   journal={Risk},
-  year={2025}
+  year={2026}
 }
 ```
