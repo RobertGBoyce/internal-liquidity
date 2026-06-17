@@ -49,7 +49,7 @@ Alexander Barzykin, Robert Boyce, and Eyal Neuman
 *Risk*, 2025
 
 ```bibtex
-@article{barzykin2025fx,
+@article{barzykin2026fx,
   title={FX Market Making with Internal Liquidity},
   author={Barzykin, Alexander and Boyce, Robert and Neuman, Eyal},
   journal={Risk},
