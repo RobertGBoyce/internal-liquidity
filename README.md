@@ -9,7 +9,7 @@ The code is designed to be used through a Google Colab notebook, so readers can 
 You can run the notebook here:
 
 ```text
-https://colab.research.google.com/github/RobertGBoyce/internal-liquidity/blob/main/notebooks/internal-liquidity.ipynb
+https://colab.research.google.com/github/RobertGBoyce/internal-liquidity/blob/main/notebooks/internal_liquidity.ipynb
 ```
 
 ## Installation
