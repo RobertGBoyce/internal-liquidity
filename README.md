@@ -46,7 +46,7 @@ If you use this code, please cite our paper:
 
 **FX Market Making with Internal Liquidity**  
 Alexander Barzykin, Robert Boyce, and Eyal Neuman  
-*Risk*, 2025
+*Risk*, 2026
 
 ```bibtex
 @article{barzykin2026fx,
