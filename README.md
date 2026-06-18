@@ -12,6 +12,20 @@ You can run the notebook by clicking the 'Open In Colab' link above, or at this 
 https://colab.research.google.com/github/RobertGBoyce/internal-liquidity/blob/main/notebooks/internal_liquidity.ipynb
 ```
 
+## Installation
+
+To install the package directly from GitHub, run:
+
+```bash
+pip install git+https://github.com/RobertGBoyce/internal-liquidity.git
+```
+
+The package can then be imported in Python as:
+
+```python
+import internal_liquidity
+```
+
 ## Repository structure
 
 ```text
