@@ -6,26 +6,10 @@ This repository contains Python code for simulating the internal liquidity model
 
 The code is designed to be used through a Google Colab notebook, so readers can run the simulations without installing anything locally.
 
-## Open in Colab
-
-You can run the notebook here:
+You can run the notebook by clicking the 'Open In Colab' link above, or at this link:
 
 ```text
 https://colab.research.google.com/github/RobertGBoyce/internal-liquidity/blob/main/notebooks/internal_liquidity.ipynb
-```
-
-## Installation
-
-Inside the Colab notebook, install the package directly from GitHub:
-
-```python
-!pip install git+https://github.com/RobertGBoyce/internal-liquidity.git
-```
-
-Then import the package:
-
-```python
-import internal_liquidity as il
 ```
 
 ## Repository structure
