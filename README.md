@@ -1,4 +1,4 @@
-# Internal Liquidity
+# FX Market Making with Internal Liquidity
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/RobertGBoyce/internal-liquidity/blob/main/notebooks/internal_liquidity.ipynb)
 
