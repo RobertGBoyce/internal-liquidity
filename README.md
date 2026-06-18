@@ -1,5 +1,7 @@
 # Internal Liquidity
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/RobertGBoyce/internal-liquidity/blob/main/notebooks/internal_liquidity.ipynb)
+
 This repository contains Python code for simulating the internal liquidity model from our paper *FX Market Making with Internal Liquidity* by Alexander Barzykin, Eyal Neuman, and myself. The paper is published in Risk cutting edge. 
 
 The code is designed to be used through a Google Colab notebook, so readers can run the simulations without installing anything locally.
