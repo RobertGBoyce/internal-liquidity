@@ -34,10 +34,9 @@ internal-liquidity/
 ├── pyproject.toml
 ├── notebooks/
 │   └── internal-liquidity.ipynb
-└── src/
-    └── internal_liquidity/
-        ├── __init__.py
-        └── internal_liquidity.py
+└── internal_liquidity/
+    ├── __init__.py
+    └── internal_liquidity.py
 ```
 
 ## Citation
