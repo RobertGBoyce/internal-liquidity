@@ -19,7 +19,7 @@ internal-liquidity/
 ├── README.md
 ├── pyproject.toml
 ├── notebooks/
-│   └── internal-liquidity.ipynb
+│   └── internal_liquidity.ipynb
 └── internal_liquidity/
     ├── __init__.py
     └── internal_liquidity.py
