@@ -1,8 +1,6 @@
 """FX Market Making with Internal Liquidity.
 
-Numerical solver and Monte-Carlo simulator for the model in
-
-    Barzykin, Boyce & Neuman, "FX Market Making with Internal Liquidity" (2025).
+Numerical solver and Monte-Carlo simulator for "FX Market Making with Internal Liquidity" (2026).
 
 The market maker continuously streams a bid/ask ladder of sizes ``z`` to
 external OTC clients, and these are filled with a Poisson rate depending
