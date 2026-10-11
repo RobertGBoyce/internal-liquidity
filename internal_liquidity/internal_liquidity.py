@@ -184,6 +184,36 @@ def _intervention(H: np.ndarray, p: ModelParams) -> np.ndarray:
     return M
 
 
+def _apply_obstacle(Hc: np.ndarray, p: ModelParams) -> np.ndarray:
+    """Solve ``H = max(Hc, M(H))`` exactly, with ``M`` as in :func:`_intervention`.
+
+    ``M`` at inventory index ``iq`` reads only row ``iq + 1`` of ``H``, and no
+    take is admissible on the top row, so the fixed point follows from one
+    backward sweep over ``iq``.  The arithmetic is the same as in
+    :func:`_intervention`, so the result equals the converged fixed-point
+    iteration.
+    """
+    nq, nl = Hc.shape
+    ell = p.ell
+    pp = p.p
+    one_minus_pp = 1.0 - p.p
+    rho = p.rho
+
+    rows = Hc.tolist()
+    above = rows[nq - 1]
+    for iq in range(nq - 2, -1, -1):
+        row = rows[iq]
+        m = pp * above[nl - 1] + one_minus_pp * above[ell - 1] - rho
+        if m > row[ell]:
+            row[ell] = m
+        for il in range(ell + 1, nl):
+            m = above[il - 1] - rho
+            if m > row[il]:
+                row[il] = m
+        above = row
+    return np.array(rows)
+
+
 # ---------------------------------------------------------------------------
 # Solver
 # ---------------------------------------------------------------------------
@@ -221,9 +251,12 @@ def solve_hjbqvi(
     snap_dt:
         Spacing at which h snapshots are retained (used by the simulator,
         in particular for the time-dependent policy).  Default 0.3s = sim step.
-    obstacle_tol, max_obstacle_iter:
-        Tolerance and cap for the per-step fixed-point that applies the
+    obstacle_tol:
+        Tolerance for the quick fixed-point check that applies the
         intervention obstacle (resolves simultaneous multi-unit takes).
+    max_obstacle_iter:
+        No longer used: when two passes do not settle the obstacle, it is
+        solved exactly (:func:`_apply_obstacle`).  Kept so existing calls work.
     """
     q2 = (p.q_values ** 2).astype(float)
     lpos = np.maximum(p.l_values, 0).astype(float)
@@ -232,8 +265,6 @@ def solve_hjbqvi(
     dt = p.T / n_steps  # exact divisor
     snap_step = max(1, int(round(snap_dt / dt)))
     n_snap = n_steps // snap_step + 1
-    if max_obstacle_iter is None:
-        max_obstacle_iter = 4 * p.q_max + 4
 
     # Terminal condition ``h(T, q, l) = -alpha q^2``.
     H = (-p.alpha * q2)[:, None] * np.ones((1, p.n_l))
@@ -245,16 +276,18 @@ def solve_hjbqvi(
         # Explicit backward Euler on the continuation equation.
         Hc = H + dt * _generator(H, p, q2, lpos)
 
-        # Obstacle / intervention: ``H = max(continuation, take-one-unit)``, iterated
-        # to a fixed point so several units can be consumed at one instant.
+        # Obstacle / intervention: ``H = max(continuation, take-one-unit)``, so
+        # several units can be consumed at one instant.  Up to two passes of the
+        # fixed-point iteration settle it in cases such as TWAP; otherwise solve
+        # it exactly with one backward sweep.
         Hn = Hc
-        for _ in range(max_obstacle_iter):
+        for _ in range(2):
             updated = np.maximum(Hn, _intervention(Hn, p))
-            if np.max(np.abs(updated - Hn)) < obstacle_tol:
-                Hn = updated
-                break
+            settled = np.max(np.abs(updated - Hn)) < obstacle_tol
             Hn = updated
-        H = Hn
+            if settled:
+                break
+        H = Hn if settled else _apply_obstacle(Hc, p)
 
         step_from_end = n - 1  # this ``H`` is ``h`` at time t_{n-1}
         if step_from_end % snap_step == 0:
